@@ -25,6 +25,8 @@ from maskrcnn_benchmark.utils.imports import import_file
 from maskrcnn_benchmark.utils.logger import setup_logger
 from maskrcnn_benchmark.utils.miscellaneous import mkdir
 
+# os.environ['CUDA_VISIBLE_DEVICES'] = ','.join([str(x) for x in [0]])
+os.environ['CUDA_VISIBLE_DEVICES'] = ','.join([str(x) for x in [0,1]])
 
 def train(cfg, local_rank, distributed):
     model = build_detection_model(cfg)

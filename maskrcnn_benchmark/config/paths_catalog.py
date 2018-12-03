@@ -5,7 +5,7 @@ import os
 
 
 class DatasetCatalog(object):
-    DATA_DIR = "datasets"
+    DATA_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + "/data/datasets"
 
     DATASETS = {
         "coco_2014_train": (
@@ -20,6 +20,14 @@ class DatasetCatalog(object):
         "coco_2014_valminusminival": (
             "coco/val2014",
             "coco/annotations/instances_valminusminival2014.json",
+        ),
+        "coco_2017_train": (
+            "coco/train2017",
+            "coco/annotations/instances_train2017.json",
+        ),
+        "coco_2017_val": (
+            "coco/val2017", 
+            "coco/annotations/instances_val2017.json"
         ),
     }
 
