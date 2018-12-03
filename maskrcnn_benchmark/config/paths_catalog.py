@@ -29,6 +29,12 @@ class DatasetCatalog(object):
             "coco/val2017", 
             "coco/annotations/instances_val2017.json"
         ),
+        "voc_2007_trainval": ("voc/VOC2007", 'trainval'),
+        "voc_2007_test": ("voc/VOC2007", 'test'),
+        "voc_2012_train": ("voc/VOC2012", 'train'),
+        "voc_2012_trainval": ("voc/VOC2012", 'trainval'),
+        "voc_2012_val": ("voc/VOC2012", 'val'),
+        "voc_2012_test": ("voc/VOC2012", 'test'),
     }
 
     @staticmethod
@@ -42,6 +48,17 @@ class DatasetCatalog(object):
             )
             return dict(
                 factory="COCODataset",
+                args=args,
+            )
+        elif "voc" in name:
+            data_dir = DatasetCatalog.DATA_DIR
+            attrs = DatasetCatalog.DATASETS[name]
+            args = dict(
+                data_dir=os.path.join(data_dir, attrs[0]),
+                split=attrs[1],
+            )
+            return dict(
+                factory="PascalVOCDataset",
                 args=args,
             )
         raise RuntimeError("Dataset not available: {}".format(name))
