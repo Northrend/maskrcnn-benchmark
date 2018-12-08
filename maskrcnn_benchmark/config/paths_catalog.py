@@ -5,48 +5,101 @@ import os
 
 
 class DatasetCatalog(object):
-    DATA_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + "/data/datasets"
-
+    DATA_DIR = "datasets"
     DATASETS = {
-        "coco_2014_train": (
-            "coco/train2014",
-            "coco/annotations/instances_train2014.json",
-        ),
-        "coco_2014_val": ("coco/val2014", "coco/annotations/instances_val2014.json"),
-        "coco_2014_minival": (
-            "coco/val2014",
-            "coco/annotations/instances_minival2014.json",
-        ),
-        "coco_2014_valminusminival": (
-            "coco/val2014",
-            "coco/annotations/instances_valminusminival2014.json",
-        ),
+        "coco_2014_train": {
+            "img_dir": "coco/train2014",
+            "ann_file": "coco/annotations/instances_train2014.json"
+        },
+        "coco_2014_val": {
+            "img_dir": "coco/val2014",
+            "ann_file": "coco/annotations/instances_val2014.json"
+        },
+        "coco_2014_minival": {
+            "img_dir": "coco/val2014",
+            "ann_file": "coco/annotations/instances_minival2014.json"
+        },
+        "coco_2014_valminusminival": {
+            "img_dir": "coco/val2014",
+            "ann_file": "coco/annotations/instances_valminusminival2014.json"
+        },
         "coco_2017_train": (
-            "coco/train2017",
-            "coco/annotations/instances_train2017.json",
+            "img_dir": "coco/train2017",
+            "ann_file": "coco/annotations/instances_train2017.json",
         ),
         "coco_2017_val": (
-            "coco/val2017", 
-            "coco/annotations/instances_val2017.json"
+            "img_dir": "coco/val2017", 
+            "ann_file": "coco/annotations/instances_val2017.json"
         ),
-        "voc_2007_trainval": ("voc/VOC2007", 'trainval'),
-        "voc_2007_test": ("voc/VOC2007", 'test'),
-        "voc_2012_train": ("voc/VOC2012", 'train'),
-        "voc_2012_trainval": ("voc/VOC2012", 'trainval'),
-        "voc_2012_val": ("voc/VOC2012", 'val'),
-        "voc_2012_test": ("voc/VOC2012", 'test'),
+        "voc_2007_train": {
+            "data_dir": "voc/VOC2007",
+            "split": "train"
+        },
+        "voc_2007_train_cocostyle": {
+            "img_dir": "voc/VOC2007/JPEGImages",
+            "ann_file": "voc/VOC2007/Annotations/pascal_train2007.json"
+        },
+        "voc_2007_val": {
+            "data_dir": "voc/VOC2007",
+            "split": "val"
+        },
+        "voc_2007_val_cocostyle": {
+            "img_dir": "voc/VOC2007/JPEGImages",
+            "ann_file": "voc/VOC2007/Annotations/pascal_val2007.json"
+        },
+        "voc_2007_test": {
+            "data_dir": "voc/VOC2007",
+            "split": "test"
+        },
+        "voc_2007_test_cocostyle": {
+            "img_dir": "voc/VOC2007/JPEGImages",
+            "ann_file": "voc/VOC2007/Annotations/pascal_test2007.json"
+        },
+        "voc_2012_train": {
+            "data_dir": "voc/VOC2012",
+            "split": "train"
+        },
+        "voc_2012_train_cocostyle": {
+            "img_dir": "voc/VOC2012/JPEGImages",
+            "ann_file": "voc/VOC2012/Annotations/pascal_train2012.json"
+        },
+        "voc_2012_val": {
+            "data_dir": "voc/VOC2012",
+            "split": "val"
+        },
+        "voc_2012_val_cocostyle": {
+            "img_dir": "voc/VOC2012/JPEGImages",
+            "ann_file": "voc/VOC2012/Annotations/pascal_val2012.json"
+        },
+        "voc_2012_test": {
+            "data_dir": "voc/VOC2012",
+            "split": "test"
+            # PASCAL VOC2012 doesn't made the test annotations available, so there's no json annotation
+        },
+        "cityscapes_fine_instanceonly_seg_train_cocostyle": {
+            "img_dir": "cityscapes/images",
+            "ann_file": "cityscapes/annotations/instancesonly_filtered_gtFine_train.json"
+        },
+        "cityscapes_fine_instanceonly_seg_val_cocostyle": {
+            "img_dir": "cityscapes/images",
+            "ann_file": "cityscapes/annotations/instancesonly_filtered_gtFine_val.json"
+        },
+        "cityscapes_fine_instanceonly_seg_test_cocostyle": {
+            "img_dir": "cityscapes/images",
+            "ann_file": "cityscapes/annotations/instancesonly_filtered_gtFine_test.json"
+        },
         # -------- blued --------
         "blued_0920_train": (
-            "blued/blued_0920/Image",
-            "blued/blued_0920/annotations/annotation-0920_train.json",
+            "img_dir": "blued/blued_0920/Image",
+            "ann_file": "blued/blued_0920/annotations/annotation-0920_train.json",
         ),
         "blued_0920_test": (
-            "blued/blued_0920/Image", 
-            "blued/blued_0920/annotations/annotation-0920_test.json"
+            "img_dir": "blued/blued_0920/Image", 
+            "ann_file": "blued/blued_0920/annotations/annotation-0920_test.json"
         ),
         "qblued_20180803_train": (
-            "blued/qblued_20180803/Image", 
-            "blued/qblued_20180803/annotations/qblued-20180803-1207_train.json"
+            "img_dir": "blued/qblued_20180803/Image", 
+            "ann_file": "blued/qblued_20180803/annotations/qblued-20180803-1207_train.json"
         ),
         # -----------------------
     }
@@ -57,8 +110,8 @@ class DatasetCatalog(object):
             data_dir = DatasetCatalog.DATA_DIR
             attrs = DatasetCatalog.DATASETS[name]
             args = dict(
-                root=os.path.join(data_dir, attrs[0]),
-                ann_file=os.path.join(data_dir, attrs[1]),
+                root=os.path.join(data_dir, attrs["img_dir"]),
+                ann_file=os.path.join(data_dir, attrs["ann_file"]),
             )
             return dict(
                 factory="COCODataset",
@@ -68,8 +121,8 @@ class DatasetCatalog(object):
             data_dir = DatasetCatalog.DATA_DIR
             attrs = DatasetCatalog.DATASETS[name]
             args = dict(
-                data_dir=os.path.join(data_dir, attrs[0]),
-                split=attrs[1],
+                data_dir=os.path.join(data_dir, attrs["data_dir"]),
+                split=attrs["split"],
             )
             return dict(
                 factory="PascalVOCDataset",
