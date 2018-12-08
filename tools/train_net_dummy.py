@@ -25,6 +25,8 @@ from maskrcnn_benchmark.utils.imports import import_file
 from maskrcnn_benchmark.utils.logger import setup_logger
 from maskrcnn_benchmark.utils.miscellaneous import mkdir
 
+# os.environ['CUDA_VISIBLE_DEVICES'] = ','.join([str(x) for x in [0]])
+os.environ['CUDA_VISIBLE_DEVICES'] = ','.join([str(x) for x in [0,1,2,3,4,5,6,7]])
 
 def train(cfg, local_rank, distributed):
     model = build_detection_model(cfg)
@@ -35,7 +37,7 @@ def train(cfg, local_rank, distributed):
     scheduler = make_lr_scheduler(cfg, optimizer)
 
     if distributed:
-        model = torch.nn.parallel.DistributedDataParallel(
+        model = torch.nn.parallel.deprecated.DistributedDataParallel(
             model, device_ids=[local_rank], output_device=local_rank,
             # this should be removed if we update BatchNorm stats
             broadcast_buffers=False,
@@ -136,7 +138,7 @@ def main():
 
     if args.distributed:
         torch.cuda.set_device(args.local_rank)
-        torch.distributed.init_process_group(
+        torch.distributed.deprecated.init_process_group(
             backend="nccl", init_method="env://"
         )
 

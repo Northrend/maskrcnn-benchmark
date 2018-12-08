@@ -35,6 +35,20 @@ class DatasetCatalog(object):
         "voc_2012_trainval": ("voc/VOC2012", 'trainval'),
         "voc_2012_val": ("voc/VOC2012", 'val'),
         "voc_2012_test": ("voc/VOC2012", 'test'),
+        # -------- blued --------
+        "blued_0920_train": (
+            "blued/blued_0920/Image",
+            "blued/blued_0920/annotations/annotation-0920_train.json",
+        ),
+        "blued_0920_test": (
+            "blued/blued_0920/Image", 
+            "blued/blued_0920/annotations/annotation-0920_test.json"
+        ),
+        "qblued_20180803_train": (
+            "blued/qblued_20180803/Image", 
+            "blued/qblued_20180803/annotations/qblued-20180803-1207_train.json"
+        ),
+        # -----------------------
     }
 
     @staticmethod
@@ -59,6 +73,18 @@ class DatasetCatalog(object):
             )
             return dict(
                 factory="PascalVOCDataset",
+                args=args,
+            )
+        # ---- csutomized datasets ----
+        elif "blued" in name:
+            data_dir = DatasetCatalog.DATA_DIR
+            attrs = DatasetCatalog.DATASETS[name]
+            args = dict(
+                root=os.path.join(data_dir, attrs[0]),
+                ann_file=os.path.join(data_dir, attrs[1]),
+            )
+            return dict(
+                factory="DummyDataset",
                 args=args,
             )
         raise RuntimeError("Dataset not available: {}".format(name))
