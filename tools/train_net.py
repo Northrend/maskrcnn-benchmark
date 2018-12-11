@@ -25,6 +25,7 @@ from maskrcnn_benchmark.utils.imports import import_file
 from maskrcnn_benchmark.utils.logger import setup_logger
 from maskrcnn_benchmark.utils.miscellaneous import mkdir
 
+# os.environ['CUDA_VISIBLE_DEVICES'] = ','.join([str(x) for x in [0,1,2,3,4,5,6,7]])
 
 def train(cfg, local_rank, distributed):
     model = build_detection_model(cfg)
@@ -59,6 +60,7 @@ def train(cfg, local_rank, distributed):
         is_distributed=distributed,
         start_iter=arguments["iteration"],
     )
+    # print('data_loader length: {}'.format(len(data_loader)))
 
     checkpoint_period = cfg.SOLVER.CHECKPOINT_PERIOD
 

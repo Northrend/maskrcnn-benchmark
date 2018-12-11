@@ -5,7 +5,7 @@ import os
 
 
 class DatasetCatalog(object):
-    DATA_DIR = "datasets"
+    DATA_DIR = "maskrcnn_benchmark/data/datasets"
     DATASETS = {
         "coco_2014_train": {
             "img_dir": "coco/train2014",
@@ -23,14 +23,14 @@ class DatasetCatalog(object):
             "img_dir": "coco/val2014",
             "ann_file": "coco/annotations/instances_valminusminival2014.json"
         },
-        "coco_2017_train": (
+        "coco_2017_train": {
             "img_dir": "coco/train2017",
             "ann_file": "coco/annotations/instances_train2017.json",
-        ),
-        "coco_2017_val": (
+        },
+        "coco_2017_val": {
             "img_dir": "coco/val2017", 
             "ann_file": "coco/annotations/instances_val2017.json"
-        ),
+        },
         "voc_2007_train": {
             "data_dir": "voc/VOC2007",
             "split": "train"
@@ -89,18 +89,18 @@ class DatasetCatalog(object):
             "ann_file": "cityscapes/annotations/instancesonly_filtered_gtFine_test.json"
         },
         # -------- blued --------
-        "blued_0920_train": (
+        "blued_0920_train": {
             "img_dir": "blued/blued_0920/Image",
             "ann_file": "blued/blued_0920/annotations/annotation-0920_train.json",
-        ),
-        "blued_0920_test": (
+        },
+        "blued_0920_test": {
             "img_dir": "blued/blued_0920/Image", 
             "ann_file": "blued/blued_0920/annotations/annotation-0920_test.json"
-        ),
-        "qblued_20180803_train": (
+        },
+        "qblued_20180803_train": {
             "img_dir": "blued/qblued_20180803/Image", 
             "ann_file": "blued/qblued_20180803/annotations/qblued-20180803-1207_train.json"
-        ),
+        }
         # -----------------------
     }
 
@@ -133,8 +133,8 @@ class DatasetCatalog(object):
             data_dir = DatasetCatalog.DATA_DIR
             attrs = DatasetCatalog.DATASETS[name]
             args = dict(
-                root=os.path.join(data_dir, attrs[0]),
-                ann_file=os.path.join(data_dir, attrs[1]),
+                root=os.path.join(data_dir, attrs["img_dir"]),
+                ann_file=os.path.join(data_dir, attrs["ann_file"]),
             )
             return dict(
                 factory="DummyDataset",

@@ -20,18 +20,26 @@ MODEL:
     POOLER_SAMPLING_RATIO: 2
     FEATURE_EXTRACTOR: "FPN2MLPFeatureExtractor"
     PREDICTOR: "FPNPredictor"
+INPUT:
+  # MIN_SIZE_TRAIN: (600, 800, 1000, 1200)
+  MIN_SIZE_TRAIN: 800 
+  MAX_SIZE_TRAIN: 2000 
+  MIN_SIZE_TEST: 800
+  MAX_SIZE_TEST: 1600
 DATASETS:
   TRAIN: ("blued_0920_train", "qblued_20180803_train")
   TEST: ("blued_0920_test",)
 DATALOADER:
   SIZE_DIVISIBILITY: 32
-  NUM_WORKERS: 4
+  NUM_WORKERS: 8
 SOLVER:
-  BASE_LR: 0.02
+  BASE_LR: 0.03
   WEIGHT_DECAY: 0.0001
-  # epoch_size=71619/16=4476
-  STEPS: (73000, 97000)  # 16.23e, 21.64e
-  MAX_ITER: 109000  # 24.35e 
+  # epoch_size=71383/16=4461.4
+  STEPS: (105000, 145000)  # 24.36e, 32.46e 
+  MAX_ITER: 163000  # 36.51e 
   IMS_PER_BATCH: 16 
+  WARMUP_ITERS: 500
+  CHECKPOINT_PERIOD: 5000   # 1e
 TEST:
-  TEST_WEIGHT: /workspace/blued/model/blued_v14_fR-101-FPN-2x-1203/model_final.pth
+  TEST_WEIGHT: /workspace/blued/model/blued_v14.1_fR-101-FPN-2x-1209/model_final.pth 
