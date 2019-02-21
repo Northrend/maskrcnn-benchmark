@@ -1,0 +1,48 @@
+INPUT:
+  # MIN_SIZE_TRAIN: (600, 800, 1000, 1200, 1400)
+  MIN_SIZE_TRAIN: (800,) 
+  MAX_SIZE_TRAIN: 2000 
+  MIN_SIZE_TEST: 800
+  MAX_SIZE_TEST: 2000 
+MODEL:
+  META_ARCHITECTURE: "GeneralizedRCNN"
+  # WEIGHT: "catalog://ImageNetPretrained/MSRA/R-101"
+  WEIGHT: /workspace/alpha/pretrained_models/caffe2/R-101.pkl 
+  # WEIGHT: /workspace/alpha/pretrained_models/caffe2/R-50.pkl 
+  BACKBONE:
+    CONV_BODY: "R-101-FPN"
+    # CONV_BODY: "R-50-FPN"
+    OUT_CHANNELS: 256
+  RPN:
+    USE_FPN: True
+    ANCHOR_STRIDE: (4, 8, 16, 32, 64)
+    PRE_NMS_TOP_N_TRAIN: 2000
+    PRE_NMS_TOP_N_TEST: 1000
+    POST_NMS_TOP_N_TEST: 1000
+    FPN_POST_NMS_TOP_N_TEST: 1000
+  ROI_HEADS:
+    USE_FPN: True
+  ROI_BOX_HEAD:
+    POOLER_RESOLUTION: 7
+    POOLER_SCALES: (0.25, 0.125, 0.0625, 0.03125)
+    POOLER_SAMPLING_RATIO: 2
+    FEATURE_EXTRACTOR: "FPN2MLPFeatureExtractor"
+    PREDICTOR: "FPNPredictor"
+DATASETS:
+  TRAIN: ("juggdet_0124_train", )
+  TEST: ("juggdet_0503_test",)
+DATALOADER:
+  SIZE_DIVISIBILITY: 32
+  NUM_WORKERS: 8
+SOLVER:
+  # BASE_LR: 0.02
+  BASE_LR: 0.01
+  WEIGHT_DECAY: 0.0001
+  # epoch_size=172920/16=10807.5
+  STEPS: (176000, 234000)  # 16.23e, 21.64e
+  MAX_ITER: 264000  # 24.35e 
+  # STEPS: (86460, )  # 16.23e, 21.64e
+  # MAX_ITER: 86460  # 24.35e 
+  IMS_PER_BATCH: 16 
+TEST:
+  TEST_WEIGHT: /workspace/alpha/blademaster/model/juggdet_v8_fR-101-FPN/model_final.pth

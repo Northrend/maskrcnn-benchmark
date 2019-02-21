@@ -2,10 +2,12 @@
 """Centralized catalog of paths."""
 
 import os
+MB_ROOT_PATH = "/workspace/maskrcnn-benchmark"
 
 
 class DatasetCatalog(object):
-    DATA_DIR = "maskrcnn_benchmark/data/datasets"
+    # DATA_DIR = "maskrcnn_benchmark/data/datasets"
+    DATA_DIR = os.path.join(MB_ROOT_PATH, "datasets")
     DATASETS = {
         "coco_2017_train": {
             "img_dir": "coco/train2017",
@@ -108,7 +110,17 @@ class DatasetCatalog(object):
         "qblued_20180803_train": {
             "img_dir": "blued/qblued_20180803/Image", 
             "ann_file": "blued/qblued_20180803/annotations/qblued-20180803-1207_train.json"
-        }
+        },
+        # ------- juggdet -------
+        "juggdet_0124_train": {
+            "img_dir": "juggdet/Image",
+            "ann_file": "juggdet/juggdet_0124/annotations/juggdet_1211_train_0124.json",
+            # "ann_file": "juggdet/juggdet_0124/annotations/juggdet_1211_train_0124_debug.json",
+        },
+        "juggdet_0503_test": {
+            "img_dir": "juggdet/Image", 
+            "ann_file": "juggdet/juggdet_0503/annotations/juggdet_0503_test_0821.json"
+        },
         # -----------------------
     }
 
@@ -138,6 +150,17 @@ class DatasetCatalog(object):
             )
         # ---- csutomized datasets ----
         elif "blued" in name:
+            data_dir = DatasetCatalog.DATA_DIR
+            attrs = DatasetCatalog.DATASETS[name]
+            args = dict(
+                root=os.path.join(data_dir, attrs["img_dir"]),
+                ann_file=os.path.join(data_dir, attrs["ann_file"]),
+            )
+            return dict(
+                factory="DummyDataset",
+                args=args,
+            )
+        elif "juggdet" in name:
             data_dir = DatasetCatalog.DATA_DIR
             attrs = DatasetCatalog.DATASETS[name]
             args = dict(

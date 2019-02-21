@@ -53,8 +53,12 @@ class Matcher(object):
         if match_quality_matrix.numel() == 0:
             # empty targets or proposals not supported during training
             if match_quality_matrix.shape[0] == 0:
-                raise ValueError(
-                    "No ground-truth boxes available for one of the images "
+                # ---- debug ----
+                print('=>', match_quality_matrix)
+                # ---------------
+                # raise ValueError(
+                print("======!======\n"+
+                    "No ground-truth boxes available for one of the images "+
                     "during training")
             else:
                 raise ValueError(

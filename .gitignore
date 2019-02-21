@@ -30,4 +30,4 @@ dist/
 /models
 
 # datasets soft link
-maskrcnn_benchmark/data/datasets/
+# maskrcnn_benchmark/data/datasets/
